@@ -180,12 +180,107 @@ establishing trust in keys.
 
 \newpage
 \subsection{Establishing Trust in Keys}
-TODO
+Ways to establish trust in keys:
+\begin{itemize}
+  \item Meet in person to exchange keys.
+  \begin{itemize}\item This is the simplest way, however this is not practical at scale over the internet
+  \end{itemize}
+\end{itemize}
+\\~\\
+
+
+\begin{itemize}
+  \item Fingerprint verification.
+  \begin{itemize}\item This is used by SSH for host keys.  \item verify a cryptographic hash of a public key through a separate channel,or “trust on first use”(TOFU). 
+
+
+  \item also used by encrypted messaging apps like Signal.
+  \\
+
+  \end{itemize}
+\end{itemize}
+\\
+\\
+\includegraphics[scale=0.65]{./Trust-in-keys1.png}
+\\
+  If you think that your connection probably hasn't had a man in the middle the first time that you connect, then you can trust that forever. If that ever changes, you get a warning message as illustrated in the picture.
+  \\
+
+\begin{itemize}
+  \item Hard code public keys in software
+  \begin{itemize}\item “Certificate pinning” used by browsers to protect against attacks: "certificate pinning" bakes in keys into software.
+ 
+  \end{itemize}
+\end{itemize}
+\\
+\\
+\begin{itemize}
+  \item Certificate Authorities
+  \begin{itemize}\item the first public key infrastructure in the 1990s
+  \item Certificate authority (CA) is  a kind of commercial trusted intermediary that verifies public keys and signs them in exchange for money. 
+  \item This is used for TLS, software signing keys. 
+  \end{itemize}
+    If you trust the Certificate authority, you transitively trust the keys it signs. The CA can't decrypt your traffic because all they are doing is signing the public key, and they never see the private key.
+\end{itemize}
+\\~\\
+
+\begin{itemize}
+  \item  Web of Trust
+  \\
+  This is an alternative to trusting commercial companies: you trust your friends because you can't meet everybody, but if your friends have met somebody and signed their public key, you also can trust that person. Anybody who trusts my public key will trust x’s.
+  \begin{itemize}
+  \item you establish trust in intermediaries of your choice
+
+  \item You then transitively trust the keys they sign.
+  \item This is used by PGP.
+  \\
+  PGP (Pretty Good Privacy) is an email encryption open source program written in the early 1990s . It is very difficult to use it: you must install a key base, which hides details of cryptography. The key base acts as a trusted third party to store your public keys along with your identity. Other options for doing PGP is using the command line tool. The image below is an example of using command line tool.
+  \\~\\
+  \includegraphics[scale=0.45]{./Trust-in-keys2.png}
+  
+ 
+  \end{itemize}
+  
+  
+\newpage
+\subsection{use randomness in signature}
+
+Returning our discussion to the secure channel: assume Alice knows to trust a key because it has a certificate authority signature or baked into our software. Now Alice and Bob are able to negotiate a fresh shared session key and encrypt all of their messages using symmetric crypto which will be secure against an active man in the middle and a passive eavesdropper.\\
+
+{\parindent11pt One final detail: in order to protect against an adversary from replaying a signature (reusing it across multiple handshakes), you might include some extra randomness, for example a nonce, a value that you use once. It doesn't necessarily have to be cryptographically strong, but it has to be unpredictable to 
+the adversary. The signature is over these randomly chosen values so should be different every time the protocol runs, so adversaries can't steal the signature from a previous protocol.}
+
+\\~\\
+  \includegraphics[scale=0.6]{./Trust-in-keys3.png}
+
+Keep in mind that the Diffie-Hellman key exchange is subject to a man in the middle attack. Therefore you need to use digital signatures, because you need to know where to get your trust from the public key that is signed, so you need a public key infrastructure. Once you've done that, then you can trust that Diffie-Hellman key exchange hasn't been man in the middle. Then you derive symmetric session keys and then use symmetric crypto to encrypt the content.
+
+\end{itemize}
 
 \newpage
 \section{TSL: Transport Layer Security}
 
 \subsection{TSL Overview}
+ TLS was called SSL in the 1990s. It provides an encrypted channel for application data. It's used for HTTPS (HTTP inside of a TLS session). Keep in mind that the content that's being sent, like the symmetrically encrypted messages, once negotiation is done, is like the HTTP connection. There are several protocol versions which are not numbered sequentially. 
+Academic papers show that maintaining support for old versions of the protocol lead to bad downgrade and decryption attacks.
+\\~\\
+\indent SSL 1.0 Terribly insecure; never released.
+\\
+\indent SSL 2.0 Released in 1995; terribly insecure,deprecated in 2011.
+\\
+\indent SSL 3.0  Released in 1996; terribly insecure,deprecated in 2015.
+
+\\
+\indent TLS 1.0 Released in 1999; deprecated in 2020. 
+\\
+\indent TLS 1.1 Released in 2006; deprecated in 2020.
+\\
+\indent TLS 1.2 Released in 2008. Ok.
+\\
+\indent TLS 1.3 Standardized in August 2018 and is being rolled out now;  major change\\
+\indent from TLS 1.2 .
+\\~\\
+TLS 1.1, 1.2,  and 1.3 are similar, but in general TLS 1.3 is a better protocol. Older versions of TLS have potential flaws.
 
 \newpage
 \subsection{TLS 1.2 with Diffie-Hellman Key Exchange}
