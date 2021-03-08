@@ -317,4 +317,21 @@ instead encrypts a secret and sends it to the server.
 \subsection{The “Crypto Wars” and the Historical Development of TLS (not in 
 lecture)}
 
+Even if TLS and key exchange works perfectly, there is still the matter of old-fashioned extortion by powerful governments. Consider, for example, the events of 2013, after Edward Snowden blew the whistle on the NSA's domestic spying capabilities.
+
+Snowden was using a secure mail service Lavabit. In order for the US government to spy on his communications after his defection.
+
+\includegraphics[scale=.3]{./lavabit-summons.png}
+
+Lavabit was commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys to present to the court. However, Ladar Levison chose to bring a blurry, illegible photo which he claimed to be the TLS key.
+
+\includegraphics[scale=.3]{./lavabit-blurry-key.png}
+
+Lavabit never gave up the key, and instead chose to end their business operations rather than violate the privacy of their customers around the globe. Politicians and the US government do not care about the individual's right to privacy. For example, here is a quote from former president Barack Obama:
+
+"Because, if, in fact, you can’t crack that [encryption] at all, government can’t get in, then everybody is walking around with a Swiss bank account in their pocket – right? So there has to be some concession to the need to be able to get into that information somehow."
+
+
+It is with this spirit that the US government has actually weakened encryption to make their job of spying easier. For example, in the 1990s, TLS 1.0 included options to weaken the protocol for US export control (browsers outside of the US were to request the weakened option). Even though these options are no longer required due to political shifts, there are still servers that respect the request. This lead to a series of attacks such as FREAK, logjam, and DROWN. 
+
 \end{document}
