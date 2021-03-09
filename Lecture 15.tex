@@ -55,7 +55,7 @@
 %%% The "real" document content comes below...
 
 \title{Lecture 15}
-\author{TLS and secure channels}
+\author{TLS and Secure Channels}
 %\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
 
@@ -455,18 +455,38 @@ instead encrypts a secret and sends it to the server.
 
 \newpage
 \subsection{How TLS Achieves Its Security Goals}
-
+It allows transmitting information between a client and the server with an encrypted connection. Listening in, only allows the recipients who are exchanging information to be seen. Without the secret keys the information cannot be decrypt it.
 \subsection{What If a Private Key Gets Stolen or Compromised?}
-
+\begin{description}
+  \item[$\bullet$] The attacker is able to actively man-in-the-middle a connection. Therefore, they are able to impersonate the server to others. This allows the attacker to eavesdrop between the parties. With the a valid secret key they are able to decrypt messages that are being sent from the users compromised key.
+  \item[$\bullet$] With a compromised RSA key, the attacker can obtain the session keys and decrypt the sessions information. Any past traffic that is recorded can also be decrypted with such an attack.
+\end{description}
 \subsection{TLS v. 1.2 and Below Vulnerabilities}
-
+\begin{description}
+  \item[$\bullet$] TLS 1.2 and below allowed attackers manipulate data between client and servers. Including credit card information, credentials, and other valuable information. 
+  \item[$\bullet$] TLS 1.2 addressed these concerns. They allowed clients and servers to choose specific hash and signature algorithms. Allowed authenticated ecryption for other data modes.
+  \end{description}
 \subsection{TLS 1.3}
+\begin{description}
+  \item[$\bullet$] Removes the support of SHA-224 and MD5 because of the compromised vulnerabilities. 
+  \item[$\bullet$] Removes RSA key exchange, which allowed protection for passive decryption
+  \item[$\bullet$] Allowing handshake encryption immediately after key exchange. This limits the amount of data that an eavesdropper can see. Also a noticeable slower time to secure a connection.
+\end{description}
 
-\subsection{TLS Key Theft and Other Risks in the Wild (not in lecture)}
+\subsection{TLS Key Theft and Other Risks in the Wild}
+\begin{description}
+  \item[$\bullet$] A very common attack is SSL tripping. The attacker gets in between the user and an encrypted host. They act as a middle host between the client and secured website. Any information the user enters will first go through the attacker
+  \item[$\bullet$] Using expired TLS certificates can cause a man-in-middle attack. Therefore, any expired certificates should be removed from servers.
+ \item[$\bullet$] Not identifying any forges or untrusted certificates
+\end{description}
 
-\subsection{The “Crypto Wars” and the Historical Development of TLS (not in 
-lecture)}
+\subsection{The “Crypto Wars” and the Historical Development of TLS}
+\begin{description}
+  \item[$\bullet$] It is an unofficial term used to describe the feud between governments and their attempt to limit the access cryptography strong enough to go unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data Encryption Standard, but led many to believe there will always be a back door if a government wanted to eavesdrop on "encypted" data.
+  \item[$\bullet$] The development of TLS has been supported by governments in order to keep secure connections between clients and servers, while keeping with government standards.
+\end{description}
 
+\subsection{Miles}
 Even if TLS and key exchange works perfectly, there is still the matter of old-fashioned extortion by powerful governments. Consider, for example, the events of 2013, after Edward Snowden blew the whistle on the NSA's domestic spying capabilities.
 
 Snowden was using a secure mail service Lavabit. In order for the US government to spy on his communications after his defection.
