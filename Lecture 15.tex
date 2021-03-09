@@ -96,7 +96,7 @@
 
 \section{Constructing a Secure Encrypted Channel}
 In order to construct a securely encrypted channel, several preliminary
-steps must be performed in order for it to be established.
+steps must be performed:
 
 \subsection{Encryption and MAC (Message Authentication Code)}
 
@@ -144,24 +144,25 @@ used to create encryption and MAC keys they can use for symmetric cryptography.}
 \newpage
 \subsection{Ensure Authenticity of Endpoints}
 There is a vulnerabiliy with this approach because if there is an active
-man-in-the-middle attack, they could man-in-the-middle attack the Diffie-Hellman
+man-in-the-middle attack, the attacker can intercept the Diffie-Hellman
 key exchange.  To ensure the authenticity of the endpoint we must use
 \textbf{digital signatures}, to prevent man-in-the-middle interference of the
 key exchange.
-\smallskip
-You can either have one or both parties sign the key exchange with a long-term
+You can have either one or both parties sign the key exchange with a long-term
 public key.
 
-\includegraphics[scale=.7]{./tls3.png}
+\begin{center}
+	\includegraphics[scale=.7]{./tls3.png}
+\end{center}
 
-For the sake of example, assume that Alice is the client [web browser], Bob is 
+For example, assume that Alice is the client (web browser), Bob is 
 the web server, Alice knows the server's long-term key, and Alice is trying to
 communicate with Bob.
 
 \bigskip
 To protect the Diffie-Hellman key exchange Bob will sign the key exchange with 
 his long-term key.  Since Alice knows both Bob's original long term-key and the
-signature which Bob has given Alice can verify the signature by using Bob's
+signature which Bob has given Alice, he can verify the signature by using Bob's
 public key before progressing with the encryption.
 
 \newpage
@@ -174,11 +175,11 @@ Bob's public signing key which Alice has received.
 
 The public signing key that Bob sends to Alice is susceptible to
 active man-in-the-middle attacks, so we must determine a way to trust the keys 
-the client receives.
+that the client receives.
 
 \bigskip
-Assuming that there was a man-in-the-middle who was overseeing all the
-communications between Alice and Bob, an attacker could substitute Bob's public
+Assuming that there is a man-in-the-middle who is intercepting all of the
+communications between Alice and Bob, an attacker can substitute Bob's public
 key with their own generated public key and Alice would not be able to tell 
 the difference.
 
@@ -199,7 +200,7 @@ Ways to establish trust in keys:
 
 \begin{itemize}
   \item Fingerprint verification.
-  \begin{itemize}\item This is used by SSH for host keys.  \item verify a cryptographic hash of a public key through a separate channel,or “trust on first use”(TOFU). 
+  \begin{itemize}\item This is used by SSH for host keys.  \item verify a cryptographic hash of a public key through a separate channel or “Trust On First Use” (TOFU). 
 
 
   \item also used by encrypted messaging apps like Signal.
@@ -208,7 +209,9 @@ Ways to establish trust in keys:
   \end{itemize}
 \end{itemize}
 
-\includegraphics[scale=0.65]{./Trust-in-keys1.png}
+\begin{center}
+	\includegraphics[scale=0.5]{./Trust-in-keys1.png}
+\end{center}
 
   If you think that your connection probably hasn't had a man in the middle the first time that you connect, then you can trust that forever. If that ever changes, you get a warning message as illustrated in the picture.
 
@@ -232,7 +235,7 @@ Ways to establish trust in keys:
 \begin{itemize}
   \item  Web of Trust
 
-  This is an alternative to trusting commercial companies: you trust your friends because you can't meet everybody, but if your friends have met somebody and signed their public key, you also can trust that person. Anybody who trusts my public key will trust x’s.
+  This is an alternative to trusting commercial companies: you trust your friends because you can't meet everybody, but if your friends have met somebody and signed their public key, you can also trust that person. Anybody who trusts my public key will trust x’s.
   \begin{itemize}
   \item you establish trust in intermediaries of your choice
 
@@ -240,9 +243,11 @@ Ways to establish trust in keys:
   \item This is used by PGP.
 
   PGP (Pretty Good Privacy) is an email encryption open source program written in the early 1990s . It is very difficult to use it: you must install a key base, which hides details of cryptography. The key base acts as a trusted third party to store your public keys along with your identity. Other options for doing PGP is using the command line tool. The image below is an example of using command line tool.
+\bigskip
 
-  \includegraphics[scale=0.45]{./Trust-in-keys2.png}
-  
+\begin{center}
+	\includegraphics[scale=0.55]{./Trust-in-keys2.png}
+\end{center}
  
   \end{itemize}
   
@@ -262,126 +267,106 @@ Keep in mind that the Diffie-Hellman key exchange is subject to a man in the mid
 \end{itemize}
 
 \newpage
-\section{TSL: Transport Layer Security}
+\section{TLS: Transport Layer Security}
 
-\subsection{TSL Overview}
- TLS was called SSL in the 1990s. It provides an encrypted channel for application data. It's used for HTTPS (HTTP inside of a TLS session). Keep in mind that the content that's being sent, like the symmetrically encrypted messages, once negotiation is done, is like the HTTP connection. There are several protocol versions which are not numbered sequentially. 
+\subsection{TLS Overview}
+TLS was called SSL in the 1990s. It provides an encrypted channel for application data. It's used for HTTPS (HTTP inside of a TLS session). Keep in mind that the content that's being sent, like the symmetrically encrypted messages, once negotiation is done, is like the HTTP connection. There are several protocol versions which are not numbered sequentially. 
 Academic papers show that maintaining support for old versions of the protocol lead to bad downgrade and decryption attacks.
 
-\indent SSL 1.0 Terribly insecure; never released.
-
-\indent SSL 2.0 Released in 1995; terribly insecure,deprecated in 2011.
-
-\indent SSL 3.0  Released in 1996; terribly insecure,deprecated in 2015.
-
-
-\indent TLS 1.0 Released in 1999; deprecated in 2020. 
-
-\indent TLS 1.1 Released in 2006; deprecated in 2020.
-
-\indent TLS 1.2 Released in 2008. Ok.
-
-\indent TLS 1.3 Standardized in August 2018 and is being rolled out now;  major change\\
-\indent from TLS 1.2 .
-\\~\\
+\begin{itemize}
+\item SSL 1.0 Terribly insecure; never released.
+\item SSL 2.0 Released in 1995; terribly insecure,deprecated in 2011.
+\item SSL 3.0  Released in 1996; terribly insecure,deprecated in 2015.
+\item TLS 1.0 Released in 1999; deprecated in 2020. 
+\item TLS 1.1 Released in 2006; deprecated in 2020.
+\item TLS 1.2 Released in 2008. Ok.
+\item TLS 1.3 Standardized in August 2018 and is being rolled out now;  major change from TLS 1.2 .
+\end{itemize}
 TLS 1.1, 1.2,  and 1.3 are similar, but in general TLS 1.3 is a better protocol. Older versions of TLS have potential flaws.
 
 \newpage
 \subsection{TLS 1.2 with Diffie-Hellman Key Exchange}
 
 \subsubsection{Step 1}
-Step 1 of TLS 1.2 with a Diffie-Hellman Key Exchange is 
+\begin{center}
+	\includegraphics[scale=.5]{./DiffieStep1.png}
+\end{center}
 
-\newpage
 \subsubsection{Step 2}
-Step 2 of TLS 1.2 with a Diffie-Hellman Key Exchange is 
+\begin{center}
+	\includegraphics[scale=.5]{./DiffieStep2.png}
+\end{center}
 
-\newpage
 \subsubsection{Step 3}
-Step 3 of TLS 1.2 with a Diffie-Hellman Key Exchange is the server sends over 
-its certificate, which contains the server’s public RSA key and a certificate 
-authority's signatures.\\
 
-\includegraphics[scale=.8]{./DiffieStep3.png}
-
-(Certificates are explained more in Section 3.3)
+\begin{center}
+	\includegraphics[scale=.8]{./DiffieStep3.png}
+	\\(Certificates are explained more in Section 3.3)
+\end{center}
 
 \subsubsection{Step 4}
-Step 4 of TLS 1.2 with a Diffie-Hellman Key Exchange is the server starts the 
-key exchange.\\
 
-\includegraphics[scale=.8]{./DiffieStep4.png}
+\begin{center}
+	\includegraphics[scale=.8]{./DiffieStep4.png}
+\end{center}
 
- The server will sign its part of the key exchange, shown as 
+ \noindent The server will sign its part of the key exchange, shown as 
  $Sign_{RSAkey}(p,g,g^a)$ in the image above. Since the message is signed by 
  the server's RSA key, which is signed by a certificate authority that Alice 
- trusts, it cannot be modified by a man-in-the-middle attacker.
+ trusts, it cannot be modified by a man-in-the-middle attack.
 
-\newpage
 \subsubsection{Step 5}
-Step 5 of TLS 1.2 with a Diffie-Hellman Key Exchange is Alice[client] does her 
-part of the key exchange. \\
 
-\includegraphics[scale=.8]{./DiffieStep5.png}
+\begin{center}
+	\includegraphics[scale=.8]{./DiffieStep5.png}
+\end{center}
 
-This message is usually not authenticated since user authentication is not 
+\noindent This message is usually not authenticated since user authentication is not 
 commonly done at the cryptographic layer when using the web.
 
 \subsubsection{Step 6}
-Step 6 of TLS 1.2 with a Diffie-Hellman Key Exchange is for the client and 
-server to derive the symmetric encryption keys. This is done using a key 
-derivation function. \\
 
-\includegraphics[scale=.8]{./DiffieStep6.png}
+\begin{center}
+	\includegraphics[scale=.8]{./DiffieStep6.png}
+\end{center}
 
-$KDF$ in the image above stands for key derivation function.
-
-$k_{m_c}$, $k_{m_s}$, and $k_{e}$ are the symmetric keys.
-
-$k_{m_c}$ is the client's MAC key. $k_{m_s}$ is the server's MAC key. $k_{e}$ 
+\noindent $KDF$ is the key derivation function,
+$k_{m_c}$, $k_{m_s}$, and $k_{e}$ are the symmetric keys,
+$k_{m_c}$ is the client's MAC key, $k_{m_s}$ is the server's MAC key and $k_{e}$ 
 is the encryption key.
 
-\newpage
 \subsubsection{Step 7}
-Step 7 of TLS 1.2 with a Diffie-Hellman Key Exchange is for the client and 
-server to makes sure that messages were not changed by a man-in-the-middle 
-attacker. \\
 
-\includegraphics[scale=1.2]{./DiffieStep7.png}
-\\
+\begin{center}
+	\includegraphics[scale=.8]{./DiffieStep7.png}
+\end{center}
 
-They can verify the integrity of the handshake by each sending a MAC (Message 
+\noindent They can verify the integrity of the handshake by each sending a MAC (Message 
 Authentication Code) of all of the messages they have sent so far using the 
-symmetric keys that they derived in the last step.
+symmetric keys that they derived in the last step. This guarantees that the channel is secure.
 
-They will then be sure that the protocol has not been changed.
-
-\newpage
 \subsubsection{Step 8}
-Step 8, the last step, of TLS 1.2 with a Diffie-Hellman Key Exchange is to 
-send symmetrically encrypted requests. \\
 
-\includegraphics[scale=1.2]{./DiffieStep8.png}
-\\
+\begin{center}
+	\includegraphics[scale=.8]{./DiffieStep8.png}
+\end{center}
 
-For example, Alice[client] will make a HTTP GET request for index.html over 
+\noindent For example, Alice (client) will make an HTTP GET request for index.html over 
 the encrypted channel.
 
 \newpage
 \subsection{Certificates and Certificate Authorities in TLS}
-
-\newpage
 \begin{figure}[H]
     \centering
     \textbf{Sample Certificate}\par\medskip
     \includegraphics[scale=.4]{./cert1.png}
     \caption{an example of a valid certificate from cse.ucsd.edu}
-    \begin{itemize}
+\end{figure}
+\begin{itemize}
       \item  The certificate authority (CA) is InCommon RSA Server CA.
       \item The domain name for which this certificate is meant is cse.ucsd.edu, with multiple DNS names listed
       \item The public key uses RSA Encryption, with exponent 65537, N = 2048, and the public key and signature are both view able to the user.
-    \end{itemize}
-\end{figure}
+\end{itemize}
 \newpage
 
 \begin{figure}[H]
@@ -457,47 +442,58 @@ instead encrypts a secret and sends it to the server.
 \subsection{How TLS Achieves Its Security Goals}
 It allows transmitting information between a client and the server with an encrypted connection. Listening in, only allows the recipients who are exchanging information to be seen. Without the secret keys the information cannot be decrypt it.
 \subsection{What If a Private Key Gets Stolen or Compromised?}
-\begin{description}
-  \item[$\bullet$] The attacker is able to actively man-in-the-middle a connection. Therefore, they are able to impersonate the server to others. This allows the attacker to eavesdrop between the parties. With the a valid secret key they are able to decrypt messages that are being sent from the users compromised key.
-  \item[$\bullet$] With a compromised RSA key, the attacker can obtain the session keys and decrypt the sessions information. Any past traffic that is recorded can also be decrypted with such an attack.
-\end{description}
+\begin{itemize}
+  \item The attacker is able to actively man-in-the-middle a connection. Therefore, they are able to impersonate the server to others. This allows the attacker to eavesdrop between the parties. With the a valid secret key they are able to decrypt messages that are being sent from the users compromised key.
+  \item With a compromised RSA key, the attacker can obtain the session keys and decrypt the sessions information. Any past traffic that is recorded can also be decrypted with such an attack.
+\end{itemize}
 \subsection{TLS v. 1.2 and Below Vulnerabilities}
-\begin{description}
-  \item[$\bullet$] TLS 1.2 and below allowed attackers manipulate data between client and servers. Including credit card information, credentials, and other valuable information. 
-  \item[$\bullet$] TLS 1.2 addressed these concerns. They allowed clients and servers to choose specific hash and signature algorithms. Allowed authenticated ecryption for other data modes.
-  \end{description}
+\begin{itemize}
+  \item TLS 1.2 and below allowed attackers manipulate data between client and servers. Including credit card information, credentials, and other valuable information. 
+  \item TLS 1.2 addressed these concerns. They allowed clients and servers to choose specific hash and signature algorithms. Allowed authenticated ecryption for other data modes.
+  \end{itemize}
+
 \subsection{TLS 1.3}
-\begin{description}
-  \item[$\bullet$] Removes the support of SHA-224 and MD5 because of the compromised vulnerabilities. 
-  \item[$\bullet$] Removes RSA key exchange, which allowed protection for passive decryption
-  \item[$\bullet$] Allowing handshake encryption immediately after key exchange. This limits the amount of data that an eavesdropper can see. Also a noticeable slower time to secure a connection.
-\end{description}
+\begin{itemize}
+  \item Removes the support of SHA-224 and MD5 because of the compromised vulnerabilities. 
+  \item Removes RSA key exchange, which allowed protection for passive decryption
+  \item Allowing handshake encryption immediately after key exchange. This limits the amount of data that an eavesdropper can see. Also a noticeable slower time to secure a connection.
+\end{itemize}
 
 \subsection{TLS Key Theft and Other Risks in the Wild}
-\begin{description}
-  \item[$\bullet$] A very common attack is SSL tripping. The attacker gets in between the user and an encrypted host. They act as a middle host between the client and secured website. Any information the user enters will first go through the attacker
-  \item[$\bullet$] Using expired TLS certificates can cause a man-in-middle attack. Therefore, any expired certificates should be removed from servers.
- \item[$\bullet$] Not identifying any forges or untrusted certificates
-\end{description}
+\begin{itemize}
+  \item A very common attack is SSL tripping. The attacker gets in between the user and an encrypted host. They act as a middle host between the client and secured website. Any information the user enters will first go through the attacker
+  \item Using expired TLS certificates can cause a man-in-middle attack. Therefore, any expired certificates should be removed from servers.
+ \item Not identifying any forges or untrusted certificates
+\end{itemize}
 
 \subsection{The “Crypto Wars” and the Historical Development of TLS}
-\begin{description}
-  \item[$\bullet$] It is an unofficial term used to describe the feud between governments and their attempt to limit the access cryptography strong enough to go unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data Encryption Standard, but led many to believe there will always be a back door if a government wanted to eavesdrop on "encypted" data.
-  \item[$\bullet$] The development of TLS has been supported by governments in order to keep secure connections between clients and servers, while keeping with government standards.
-\end{description}
+\begin{itemize}
+  \item It is an unofficial term used to describe the feud between governments and their attempt to limit the access cryptography strong enough to go unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data Encryption Standard, but led many to believe there will always be a back door if a government wanted to eavesdrop on "encypted" data.
+  \item The development of TLS has been supported by governments in order to keep secure connections between clients and servers, while keeping with government standards.
+\end{itemize}
 
-\subsection{Miles}
-Even if TLS and key exchange works perfectly, there is still the matter of old-fashioned extortion by powerful governments. Consider, for example, the events of 2013, after Edward Snowden blew the whistle on the NSA's domestic spying capabilities.
+\subsection{TLS Keytheft and Other Risks in the Wild}
+If an attacker was able to issue validated certificates for a domain they don’t own, then they wouldn’t need to get a hold of any existing private keys. They would just make their own key pair and issue a certificates for it. The attacker DoS’s the victim’s server and stands their own server up using the attacker’s certificate and key.
+\\
+However, if an attacker gets the private key for a victim’s server then the attacker does not need to create a new certificate. The attacker will just grab the existing cert (it’s already being handed out by the victim’s server) and DoS the victim’s server and stand up their own server using the victim’s cert and key.
+\\
+Often an ordinary user is vulnerable to one or more parties that they don't really trust, between them and any particular peer out on the Internet, this might be the proprietor of the coffee shop where they're using WiFi, or their home ISP, the network engineers at their employer's place of business, or even the sovereign government of the country they're in.
 
-Snowden was using a secure mail service Lavabit. In order for the US government to spy on his communications after his defection.
-
+\newpage
+\subsection{Lavabit}
+Even if TLS and key exchange works perfectly, there is still the matter of old-fashioned extortion by powerful governments. For example, consider the events of 2013 after Edward Snowden blew the whistle on the NSA's domestic spying capabilities.
+Snowden was using a secure mail service Lavabit. In order for the US government to spy on his communications after his defection. Lavabit was commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys to present to the court. However, Ladar Levison chose to bring a blurry, illegible photo which he claimed to be the TLS key.
+\begin{center}
 \includegraphics[scale=.3]{./lavabit-summons.png}
-
-Lavabit was commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys to present to the court. However, Ladar Levison chose to bring a blurry, illegible photo which he claimed to be the TLS key.
-
-\includegraphics[scale=.3]{./lavabit-blurry-key.png}
+\\Lavabit summons
+\end{center}
 
 Lavabit never gave up the key, and instead chose to end their business operations rather than violate the privacy of their customers around the globe. Politicians and the US government do not care about the individual's right to privacy. For example, here is a quote from former president Barack Obama:
+
+\begin{center}
+\includegraphics[scale=.3]{./lavabit-blurry-key.png}
+\\The image of the key brought into court
+\end{center}
 
 "Because, if, in fact, you can’t crack that [encryption] at all, government can’t get in, then everybody is walking around with a Swiss bank account in their pocket – right? So there has to be some concession to the need to be able to get into that information somehow."
 
