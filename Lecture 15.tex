@@ -162,7 +162,7 @@ communicate with Bob.
 \bigskip
 To protect the Diffie-Hellman key exchange Bob will sign the key exchange with 
 his long-term key.  Since Alice knows both Bob's original long term-key and the
-signature which Bob has given Alice, he can verify the signature by using Bob's
+signature which Bob has given Alice, she can verify the signature by using Bob's
 public key before progressing with the encryption.
 
 \newpage
@@ -201,19 +201,10 @@ Ways to establish trust in keys:
 \begin{itemize}
   \item Fingerprint verification.
   \begin{itemize}\item This is used by SSH for host keys.  \item verify a cryptographic hash of a public key through a separate channel or “Trust On First Use” (TOFU). 
-
-
-  \item also used by encrypted messaging apps like Signal.
-
-
   \end{itemize}
 \end{itemize}
 
-\begin{center}
-	\includegraphics[scale=0.5]{./Trust-in-keys1.png}
-\end{center}
-
-  If you think that your connection probably hasn't had a man in the middle the first time that you connect, then you can trust that forever. If that ever changes, you get a warning message as illustrated in the picture.
+If you think that your connection probably hasn't had a man in the middle the first time that you connect, then you can trust that forever. If that ever changes, you get a warning message.
 
 \begin{itemize}
   \item Hard code public keys in software
@@ -224,9 +215,8 @@ Ways to establish trust in keys:
 
 \begin{itemize}
   \item Certificate Authorities
-  \begin{itemize}\item the first public key infrastructure in the 1990s
-  \item Certificate authority (CA) is  a kind of commercial trusted intermediary that verifies public keys and signs them in exchange for money. 
-  \item This is used for TLS, software signing keys. 
+  \begin{itemize}
+  \item A certificate authority (CA) is  a kind of commercial trusted intermediary that verifies public keys and signs them in exchange for money. This is used for TLS, software signing keys. 
   \end{itemize}
     If you trust the Certificate authority, you transitively trust the keys it signs. The CA can't decrypt your traffic because all they are doing is signing the public key, and they never see the private key.
 \end{itemize}
@@ -237,9 +227,6 @@ Ways to establish trust in keys:
 
   This is an alternative to trusting commercial companies: you trust your friends because you can't meet everybody, but if your friends have met somebody and signed their public key, you can also trust that person. Anybody who trusts my public key will trust x’s.
   \begin{itemize}
-  \item you establish trust in intermediaries of your choice
-
-  \item You then transitively trust the keys they sign.
   \item This is used by PGP.
 
   PGP (Pretty Good Privacy) is an email encryption open source program written in the early 1990s . It is very difficult to use it: you must install a key base, which hides details of cryptography. The key base acts as a trusted third party to store your public keys along with your identity. Other options for doing PGP is using the command line tool. The image below is an example of using command line tool.
@@ -468,7 +455,7 @@ It allows transmitting information between a client and the server with an encry
 
 \subsection{The “Crypto Wars” and the Historical Development of TLS}
 \begin{itemize}
-  \item It is an unofficial term used to describe the feud between governments and their attempt to limit the access cryptography strong enough to go unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data Encryption Standard, but led many to believe there will always be a back door if a government wanted to eavesdrop on "encypted" data.
+  \item Unofficial term used to describe the feud between governments and their attempt to limit the access cryptography strong enough to go unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data Encryption Standard, but led many to believe there will always be a back door if a government wanted to eavesdrop on "encypted" data.
   \item The development of TLS has been supported by governments in order to keep secure connections between clients and servers, while keeping with government standards.
 \end{itemize}
 
