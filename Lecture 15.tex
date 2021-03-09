@@ -50,6 +50,8 @@
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
+\usepackage{times}
+
 %%% END Article customizations
 
 %%% The "real" document content comes below...
@@ -253,9 +255,9 @@ Ways to establish trust in keys:
   
   
 \newpage
-\subsection{use randomness in signature}
+\subsection{Using RNG in Signature}
 
-Returning our discussion to the secure channel: assume Alice knows to trust a key because it has a certificate authority signature or baked into our software. Now Alice and Bob are able to negotiate a fresh shared session key and encrypt all of their messages using symmetric crypto which will be secure against an active man in the middle and a passive eavesdropper.\\
+Returning our discussion to the secure channel: assume Alice knows to trust a key because it has a certificate authority signature or it is baked into our software. Now Alice and Bob are able to negotiate a fresh shared session key and encrypt all of their messages using symmetric crypto which will be secure against an active man in the middle and a passive eavesdropper.\\
 
 {\parindent11pt One final detail: in order to protect against an adversary from replaying a signature (reusing it across multiple handshakes), you might include some extra randomness, for example a nonce, a value that you use once. It doesn't necessarily have to be cryptographically strong, but it has to be unpredictable to 
 the adversary. The signature is over these randomly chosen values so should be different every time the protocol runs, so adversaries can't steal the signature from a previous protocol.}
