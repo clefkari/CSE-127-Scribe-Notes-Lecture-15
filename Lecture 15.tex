@@ -67,34 +67,36 @@
 \section{Common Crytographic Network Protocols}
 
 \subsection{TLS (Transport Layer Security)}
-\begin{itemize}
-  \item  Used to provide an encryption wrapper around HTTP to make HTTPS, and for
-  many other application layer protocols.
-  \item TLS is wrapped around the application layer.
-  \item Security goals: Authenticate server, confidentiality and integrity of
-  traffic. Ensure that client is connected to the server they think they are
-  connected to.
-  \item Originally called the Secure Socket Layer (SSL).
-\end{itemize}
+TLS (Transport Layer Security), originally called the Secure Socket Layer (SSL),
+is used to provide an encryption wrapper around HTTP to make HTTPS.  TLS is 
+wrapped around the application layer so it is often utilized when securing many
+other application layer protocols.  
+
+\bigskip
+{\parindent0pt The main security goals of TLS are to: authenticate the server,
+ensure the confidentiality and integrity of the traffic, and to ensure that the
+client is infact connected to the server which they think they are connected to.}
 
 \subsection{SSH (Secure Shell)}
-\begin{itemize}
-  \item Encrypted alternative to Telnet, Telnet uses an unencrypted connection
-  that sends information in plaintext, which is easily exploitable.
-  \item Security goals: Authenticate server and client, confidentiality and
-  integrity of traffic.
-\end{itemize}
+SSH is a modern day alternative to the antequated Telnet.  Telnet was phased out
+by the more secure SSH due to security reasons as Telnet uses an unencrypted 
+connection that sends information in plaintext, which is easily exploitable.
+
+\bigskip
+{\parindent0ptIn terms of the security benefits that SSH provides, SSH 
+authenticates both server and client, and ensures the confidentiality and 
+integrity of the traffic, between server and client.}
 
 \subsection{IPsec (Internet Protocol Security)}
-\begin{itemize}
-  \item Provides an encrypted, authenticated alternative to IP. Complicated set
-  of protocols which attempt to replace the IP layer.
-  \item Regular IP is insecure because anyone can view the payload of packets.
-  \item Tunnel IPSec through IP.
-  \item Commonly used for VPNs (Virtual Private Networks).
-  \item Security goals: client and server authentication, authenticate headers,
-  optionally encrypt headers, ensure confidentiality and integrity of payloads.
-\end{itemize}
+IPsec is an encrpyted and authenticated alternative to IP.  It is a complicated
+set of protocols which attempt to replace the IP layer.  Regular IP is an
+insecure solution because the packets which travel that layer are unencrypted.
+IPSec is a common solution in VPN (Virtual Private Network) services.
+
+\bigskip
+{\parindent0pt IPSec's security goals are client and server authentication, the
+authentication of headers and option to encrypt headers, and ensuring the
+confidentiality and integrity of payloads.}
 
 \section{Constructing a Secure Encrypted Channel}
 In order to construct a securely encrypted channel, several preliminary
@@ -119,7 +121,6 @@ and decrypt the cipher text to get the original message.}
 {\parindent0pt The MAC is a short string of data which authenticates the message, i.e. it
 confirms that the message was sent by the true sender and was not modified in transit.}
 
-\newpage
 \subsection{Diffie-Hellman key exchange}
 In order to negotiate charing encryption and MAC keys, there must be a
 Diffie-Hellman key exchange.
@@ -143,7 +144,6 @@ Function (KDF),
 $k_e, k_m\ =\ KDF(g^{ab})$, which we can think of as a hash function that is 
 used to create encryption and MAC keys they can use for symmetric cryptography.}
 
-\newpage
 \subsection{Ensure Authenticity of Endpoints}
 There is a vulnerabiliy with this approach because if there is an active
 man-in-the-middle attack, the attacker can intercept the Diffie-Hellman
@@ -167,7 +167,6 @@ his long-term key.  Since Alice knows both Bob's original long term-key and the
 signature which Bob has given Alice, she can verify the signature by using Bob's
 public key before progressing with the encryption.
 
-\newpage
 \subsection{Trusting Signatures}
 While we may now be protected against man-in-the-middle attacks targeted towards
 the Diffie-Hellman key exchange, we have still not verified the integrity of
@@ -189,7 +188,6 @@ the difference.
 Due to the nature of this attack, we must have an \textbf{external} method of
 establishing trust in keys.
 
-\newpage
 \subsection{Establishing Trust in Keys}
 Ways to establish trust in keys:
 \begin{itemize}
@@ -241,7 +239,6 @@ If you think that your connection probably hasn't had a man in the middle the fi
   \end{itemize}
   
   
-\newpage
 \subsection{Using RNG in Signature}
 
 Returning our discussion to the secure channel: assume Alice knows to trust a key because it has a certificate authority signature or it is baked into our software. Now Alice and Bob are able to negotiate a fresh shared session key and encrypt all of their messages using symmetric crypto which will be secure against an active man in the middle and a passive eavesdropper.\\
@@ -255,7 +252,6 @@ Keep in mind that the Diffie-Hellman key exchange is subject to a man in the mid
 
 \end{itemize}
 
-\newpage
 \section{TLS: Transport Layer Security}
 
 \subsection{TLS Overview}
@@ -273,7 +269,6 @@ Academic papers show that maintaining support for old versions of the protocol l
 \end{itemize}
 TLS 1.1, 1.2,  and 1.3 are similar, but in general TLS 1.3 is a better protocol. Older versions of TLS have potential flaws.
 
-\newpage
 \subsection{TLS 1.2 with Diffie-Hellman Key Exchange}
 
 \subsubsection{Step 1}
@@ -343,7 +338,6 @@ symmetric keys that they derived in the last step. This guarantees that the chan
 \noindent For example, Alice (client) will make an HTTP GET request for index.html over 
 the encrypted channel.
 
-\newpage
 \subsection{Certificates and Certificate Authorities in TLS}
 \begin{figure}[H]
     \centering
@@ -356,7 +350,6 @@ the encrypted channel.
       \item The domain name for which this certificate is meant is cse.ucsd.edu, with multiple DNS names listed
       \item The public key uses RSA Encryption, with exponent 65537, N = 2048, and the public key and signature are both view able to the user.
 \end{itemize}
-\newpage
 
 \begin{figure}[H]
     \centering
@@ -371,7 +364,6 @@ It's possible for a key to be compromised, ie for an attacker to obtain a privat
 
 \bigskip
 Therefore, there exists a revocation process for public keys. If Alice, for example, finds out that her private key has been compromised, she is able to announce or allow her senders to find out that her public key is no longer valid and they should not be using that public key to encrypt messages to her anymore. This verification must be signed by the private key, as you wouldn't want anyone else to arbitrarily cancel your key. Both CA and PGP PKIs support this. 
-\newpage
 \begin{figure}
     \centering
     \textbf{Compromised Certificate: Man in the Middle}
@@ -401,7 +393,6 @@ Therefore, there exists a revocation process for public keys. If Alice, for exam
     \item Monitors do just that, monitor the logs for anything they can be set to monitor. Some monitors can allow users to create and run queries for certificates, as google does. Some domains may be interested in receiving notifications for when a certificate is issued to their domain, or if it matches some query they are interested in monitoring.
 \end{itemize}
 
-\newpage
 \subsection{TLS 1.2 with RSA Key Exchange}
 Another way to negotiate keys in TLS 1.2 is using RSA public key encryption to 
 share a secret master key.
@@ -427,7 +418,6 @@ share a secret master key.
 The only difference from using the Diffie-Hellman key exchange is the client 
 instead encrypts a secret and sends it to the server.
 
-\newpage
 \subsection{How TLS Achieves Its Security Goals}
 It allows transmitting information between a client and the server with an encrypted connection. Listening in, only allows the recipients who are exchanging information to be seen. Without the secret keys the information cannot be decrypt it.
 \subsection{What If a Private Key Gets Stolen or Compromised?}
@@ -468,7 +458,6 @@ However, if an attacker gets the private key for a victim’s server then the at
 \\
 Often an ordinary user is vulnerable to one or more parties that they don't really trust, between them and any particular peer out on the Internet, this might be the proprietor of the coffee shop where they're using WiFi, or their home ISP, the network engineers at their employer's place of business, or even the sovereign government of the country they're in.
 
-\newpage
 \subsection{Lavabit}
 Even if TLS and key exchange works perfectly, there is still the matter of old-fashioned extortion by powerful governments. For example, consider the events of 2013 after Edward Snowden blew the whistle on the NSA's domestic spying capabilities.
 Snowden was using a secure mail service Lavabit. In order for the US government to spy on his communications after his defection. Lavabit was commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys to present to the court. However, Ladar Levison chose to bring a blurry, illegible photo which he claimed to be the TLS key.
