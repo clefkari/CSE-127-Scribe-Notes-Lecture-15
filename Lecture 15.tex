@@ -303,33 +303,18 @@ Older versions of TLS have potential flaws.
 
 \subsection{TLS 1.2 with Diffie-Hellman Key Exchange}
 
-\subsubsection{Step 1}
+\subsubsection{Step 1-4}
 \begin{center}
-	\includegraphics[scale=.5]{./DiffieStep1.png}
+  \includegraphics[width=.54\linewidth]{./DiffieStep1.png} 
+  \includegraphics[width=.54\linewidth]{./DiffieStep2.png}
+  \includegraphics[width=.54\linewidth]{./DiffieStep3.png} 
+  \includegraphics[width=.54\linewidth]{./DiffieStep4.png}
 \end{center}
 
-\subsubsection{Step 2}
-\begin{center}
-	\includegraphics[scale=.5]{./DiffieStep2.png}
-\end{center}
-
-\subsubsection{Step 3}
-
-\begin{center}
-	\includegraphics[scale=.8]{./DiffieStep3.png}
-	\\(Certificates are explained more in Section 3.3)
-\end{center}
-
-\subsubsection{Step 4}
-
-\begin{center}
-	\includegraphics[scale=.8]{./DiffieStep4.png}
-\end{center}
-
- \noindent The server will sign its part of the key exchange, shown as 
- $Sign_{RSAkey}(p,g,g^a)$ in the image above. Since the message is signed by 
- the server's RSA key, which is signed by a certificate authority that Alice 
- trusts, it cannot be modified by a man-in-the-middle attack.
+\noindent The server will sign its part of the key exchange, shown as 
+$Sign_{RSAkey}(p,g,g^a)$ in the image above. Since the message is signed by 
+the server's RSA key, which is signed by a certificate authority that Alice 
+trusts, it cannot be modified by a man-in-the-middle attack.
 
 \subsubsection{Step 5}
 
