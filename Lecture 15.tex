@@ -10,9 +10,7 @@
 
 %%% Examples of Article customizations
 % These packages are optional, depending whether you want the features they provide.
-% See the LaTeX Companion or other references for full information.
-
-%%% PAGE DIMENSIONS
+% See the LaTeX Companion or other references for full information.  %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
 \geometry{a4paper} % or letterpaper (US) or a5paper or....
 % \geometry{margin=2in} % for example, change the margins to 2 inches all round
@@ -145,98 +143,100 @@ $k_e, k_m\ =\ KDF(g^{ab})$, which we can think of as a hash function that is
 used to create encryption and MAC keys they can use for symmetric cryptography.}
 
 \subsection{Ensure Authenticity of Endpoints}
-There is a vulnerabiliy with this approach because if there is an active
-man-in-the-middle attack, the attacker can intercept the Diffie-Hellman
+{\parindent0pt There is a vulnerabiliy with this approach because if there is 
+an active man-in-the-middle attack, the attacker can intercept the Diffie-Hellman
 key exchange.  To ensure the authenticity of the endpoint we must use
 \textbf{digital signatures}, to prevent man-in-the-middle interference of the
 key exchange.
 You can have either one or both parties sign the key exchange with a long-term
-public key.
+public key.}
 
 \begin{center}
 	\includegraphics[scale=.7]{./tls3.png}
 \end{center}
 
-For example, assume that Alice is the client (web browser), Bob is 
-the web server, Alice knows the server's long-term key, and Alice is trying to
-communicate with Bob.
+{\parindent0pt For example, assume that Alice is the client (web browser), Bob 
+is the web server, Alice knows the server's long-term key, and Alice is trying 
+to communicate with Bob.}
 
 \bigskip
-To protect the Diffie-Hellman key exchange Bob will sign the key exchange with 
-his long-term key.  Since Alice knows both Bob's original long term-key and the
-signature which Bob has given Alice, she can verify the signature by using Bob's
-public key before progressing with the encryption.
+{\parindent0pt To protect the Diffie-Hellman key exchange Bob will sign the key
+exchange with his long-term key.  Since Alice knows both Bob's original long 
+term-key and the signature which Bob has given Alice, she can verify the 
+signature by using Bob's public key before progressing with the encryption.}
 
 \subsection{Trusting Signatures}
-While we may now be protected against man-in-the-middle attacks targeted towards
-the Diffie-Hellman key exchange, we have still not verified the integrity of
-Bob's public signing key which Alice has received.
+{\parindent0pt While we may now be protected against man-in-the-middle attacks 
+targeted towards the Diffie-Hellman key exchange, we have still not verified 
+the integrity of Bob's public signing key which Alice has received.}
 
 \includegraphics[scale=.7]{./tls4.png}
 
-The public signing key that Bob sends to Alice is susceptible to
+{\parindent0pt The public signing key that Bob sends to Alice is susceptible to
 active man-in-the-middle attacks, so we must determine a way to trust the keys 
-that the client receives.
+that the client receives.}
 
 \bigskip
-Assuming that there is a man-in-the-middle who is intercepting all of the
-communications between Alice and Bob, an attacker can substitute Bob's public
-key with their own generated public key and Alice would not be able to tell 
-the difference.
+{\parindent0pt Assuming that there is a man-in-the-middle who is intercepting 
+all of the communications between Alice and Bob, an attacker can substitute 
+Bob's public key with their own generated public key and Alice would not be 
+able to tell the difference.}
 
 \bigskip
-Due to the nature of this attack, we must have an \textbf{external} method of
-establishing trust in keys.
+{\parindent0pt Due to the nature of this attack, we must have an 
+\textbf{external} method of establishing trust in keys.}
 
 \subsection{Establishing Trust in Keys}
-Ways to establish trust in keys:
-\begin{itemize}
-  \item Meet in person to exchange keys.
-  \begin{itemize}\item This is the simplest way, however this is not practical at scale over the internet
-  \end{itemize}
-\end{itemize}
 
+\bigskip
+{\parindent0pt \textbf{Meet in person to exchange keys.}}
 
+\smallskip
+{\parindent0pt This is the simplest way, however this is not practical at scale
+over the internet}
 
-\begin{itemize}
-  \item Fingerprint verification.
-  \begin{itemize}\item This is used by SSH for host keys.  \item verify a cryptographic hash of a public key through a separate channel or “Trust On First Use” (TOFU). 
-  \end{itemize}
-\end{itemize}
+\bigskip
+{\parindent0pt \textbf{Fingerprint Verification}}
 
-If you think that your connection probably hasn't had a man in the middle the first time that you connect, then you can trust that forever. If that ever changes, you get a warning message.
+\smallskip
+{\parindent0pt Fingerprint verification is a methodology that follows the TOFO 
+(Trust On First Use) paradigm of verifying the cryptographic hash of a public 
+key through a seperate channel.  It is sometimes used to secure SSH host keys. 
+A benefit of this method is that you can trust the fingerprint forever as long 
+as you dont believe that the connection was man-in-the-middle attack during the
+first connection.}
 
-\begin{itemize}
-  \item Hard code public keys in software
-  \begin{itemize}\item “Certificate pinning” used by browsers to protect against attacks: "certificate pinning" bakes in keys into software.
- 
-  \end{itemize}
-\end{itemize}
+\bigskip
+{\parindent0pt \textbf{Hard Code Public Keys in Software}}
 
-\begin{itemize}
-  \item Certificate Authorities
-  \begin{itemize}
-  \item A certificate authority (CA) is  a kind of commercial trusted intermediary that verifies public keys and signs them in exchange for money. This is used for TLS, software signing keys. 
-  \end{itemize}
-    If you trust the Certificate authority, you transitively trust the keys it signs. The CA can't decrypt your traffic because all they are doing is signing the public key, and they never see the private key.
-\end{itemize}
+\smallskip
+{\parindent0pt Otherwise known as "Certificate pinning" this method is used by
+web browsers to protect against attacks from malicious sites.  Pinned
+certificates are usually keys baked into software.  To figure out which
+certificates to trust there are 'certificate authorities' whom act as a
+commercial trusted intermediary that verfiy public keys and sign them in
+exchange for money.  If you trust the certificate authority then you must also
+trust the keys they sign.  You do not need to worry about these certificate
+authorities decrypting your traffic because all they know you are doing is
+signing the public key, they have no idea of the private key used.}
 
+\bigskip
+{\parindent0pt \textbf{Web of Trust}}
 
-\begin{itemize}
-  \item  Web of Trust
+\smallskip
+{\parindent0pt If you do not like the premise of trusting large commerical companies with
+profit in mind you can instead choose to create a Web of Trust. This is done  by
+trusting your friends, and in turn trusting anyone who has had their public key
+signed by one of your friends so you can indirectly trust others through your
+friends.  This method of establishing trust is used by PGP (Pretty Good
+Privacy), an open source email encryption software written in the
+early 1990s.}
 
-  This is an alternative to trusting commercial companies: you trust your friends because you can't meet everybody, but if your friends have met somebody and signed their public key, you can also trust that person. Anybody who trusts my public key will trust x’s.
-  \begin{itemize}
-  \item This is used by PGP.
-
-  PGP (Pretty Good Privacy) is an email encryption open source program written in the early 1990s . It is very difficult to use it: you must install a key base, which hides details of cryptography. The key base acts as a trusted third party to store your public keys along with your identity. Other options for doing PGP is using the command line tool. The image below is an example of using command line tool.
 \bigskip
 
 \begin{center}
 	\includegraphics[scale=0.55]{./Trust-in-keys2.png}
 \end{center}
- 
-  \end{itemize}
   
   
 \subsection{Using RNG in Signature}
@@ -250,23 +250,38 @@ the adversary. The signature is over these randomly chosen values so should be d
 
 Keep in mind that the Diffie-Hellman key exchange is subject to a man in the middle attack. Therefore you need to use digital signatures, because you need to know where to get your trust from the public key that is signed, so you need a public key infrastructure. Once you've done that, then you can trust that Diffie-Hellman key exchange hasn't been man in the middle. Then you derive symmetric session keys and then use symmetric crypto to encrypt the content.
 
-\end{itemize}
-
 \section{TLS: Transport Layer Security}
 
 \subsection{TLS Overview}
-TLS was called SSL in the 1990s. It provides an encrypted channel for application data. It's used for HTTPS (HTTP inside of a TLS session). Keep in mind that the content that's being sent, like the symmetrically encrypted messages, once negotiation is done, is like the HTTP connection. There are several protocol versions which are not numbered sequentially. 
-Academic papers show that maintaining support for old versions of the protocol lead to bad downgrade and decryption attacks.
+TLS was called SSL in the 1990s. It provides an encrypted channel for 
+application data. It's used for HTTPS (HTTP inside of a TLS session). Keep in 
+mind that the content that's being sent, like the symmetrically encrypted 
+messages, once negotiation is done, is like the HTTP connection. There are 
+several protocol versions which are not numbered sequentially.  Academic papers
+show that maintaining support for old versions of the protocol lead to bad 
+downgrade and decryption attacks.
 
-\begin{itemize}
-\item SSL 1.0 Terribly insecure; never released.
-\item SSL 2.0 Released in 1995; terribly insecure,deprecated in 2011.
-\item SSL 3.0  Released in 1996; terribly insecure,deprecated in 2015.
-\item TLS 1.0 Released in 1999; deprecated in 2020. 
-\item TLS 1.1 Released in 2006; deprecated in 2020.
-\item TLS 1.2 Released in 2008. Ok.
-\item TLS 1.3 Standardized in August 2018 and is being rolled out now;  major change from TLS 1.2 .
-\end{itemize}
+\smallskip
+{\parindent0pt SSL 1.0 Terribly insecure; never released.}
+
+\smallskip
+{\parindent0pt SSL 2.0 Released in 1995; terribly insecure,deprecated in 2011.}
+
+\smallskip
+{\parindent0pt SSL 3.0  Released in 1996; terribly insecure,deprecated in 2015.}
+
+\smallskip
+{\parindent0pt TLS 1.0 Released in 1999; deprecated in 2020.}
+
+\smallskip
+{\parindent0pt TLS 1.1 Released in 2006; deprecated in 2020.}
+
+\smallskip
+{\parindent0pt TLS 1.2 Released in 2008. Ok.}
+
+\smallskip
+{\parindent0pt TLS 1.3 Standardized in August 2018 and is being rolled out now;  major change from TLS 1.2 .
+
 TLS 1.1, 1.2,  and 1.3 are similar, but in general TLS 1.3 is a better protocol. Older versions of TLS have potential flaws.
 
 \subsection{TLS 1.2 with Diffie-Hellman Key Exchange}
@@ -345,11 +360,17 @@ the encrypted channel.
     \includegraphics[scale=.4]{./cert1.png}
     \caption{an example of a valid certificate from cse.ucsd.edu}
 \end{figure}
-\begin{itemize}
-      \item  The certificate authority (CA) is InCommon RSA Server CA.
-      \item The domain name for which this certificate is meant is cse.ucsd.edu, with multiple DNS names listed
-      \item The public key uses RSA Encryption, with exponent 65537, N = 2048, and the public key and signature are both view able to the user.
-\end{itemize}
+
+\smallskip
+\noindent The certificate authority (CA) is InCommon RSA Server CA.
+
+\smallskip
+\noindent The domain name for which this certificate is meant is 
+cse.ucsd.edu, with multiple DNS names listed
+
+\smallskip
+\noindent The public key uses RSA Encryption, with exponent 65537, N = 2048,
+and the public key and signature are both view able to the user.
 
 \begin{figure}[H]
     \centering
@@ -369,29 +390,64 @@ Therefore, there exists a revocation process for public keys. If Alice, for exam
     \textbf{Compromised Certificate: Man in the Middle}
     \includegraphics[scale=.4]{./cert3.png}
     \caption{Man-in-the-middle attack using rogue certificate}
-    \begin{itemize}
-      \item The attacker has managed to obtain valid certificates from a CA trusted by the client.
-      \item This allows the attacker to intercept the data being sent from the bank, and send the client his own "certified trusted" public key as if he were the bank; the client will accept this, (since it has the valid certificate) encrypt her data using this malicious key, and send the data to the bank.
-      \item This gives the attacker free reign to proxy any and all traffic to and from the client and the bank, modifying any data as he pleases, as he can decrypt whatever the client was sending to the bank.
-      \item One could imagine the attacker modifying the client request to say something along the lines of "transfer all the money to the attacker account." 
-    \end{itemize}
+
 \end{figure}
 
+\bigskip
+{\parindent0pt The attacker has managed to obtain valid certificates from a CA 
+trusted by the client.}
+
+\bigskip
+{\parindent0pt This allows the attacker to intercept the data being sent from the
+bank, and send the client his own "certified trusted" public key as if 
+he were the bank; the client will accept this, (since it has the valid 
+certificate) encrypt her data using this malicious key, and send the 
+data to the bank.}
+
+\bigskip
+{\parindent0pt This gives the attacker free reign to proxy any and all traffic 
+to and from the client and the bank, modifying any data as he pleases, 
+as he can decrypt whatever the client was sending to the bank.}
+
+\bigskip
+{\parindent0pt One could imagine the attacker modifying the client request to say
+something along the lines of "transfer all the money to the attacker 
+account." }
+
+
 \subsection {CA Hacks / Vulnerabilities}
-\paragraph{There is a long history of CAs getting hacked or certifying wrong things}
- \begin{itemize}
-    \item 2011: Comodo + DigiNotar hacked to issue fraudulent certificates for Hotmail, Gmail, Skype, Yahoo Mail, Firefox
-    \item 2013: TurkTrust issued fraudulent certificate for Gmail
-    \item 2014: Indian NIC issue certs for Google and Yahoo!
-    \item 2016: WoSign issues cert for GitHub.
-\end{itemize}
+{\parindent0pt \textbf{There is a long history of CAs getting hacked or 
+certifying wrong things.}}
+
+\smallskip
+{\parindent0pt 2011: Comodo + DigiNotar hacked to issue fraudulent certificates
+for Hotmail, Gmail, Skype, Yahoo Mail, Firefox}
+
+\smallskip
+{\parindent0pt 2013: TurkTrust issued fraudulent certificate for Gmail}
+
+\smallskip
+{\parindent0pt 2014: Indian NIC issue certs for Google and Yahoo!}
+
+\smallskip
+{\parindent0pt 2016: WoSign issues cert for GitHub.}
+
 \paragraph{Mitigations}
 \subparagraph {Certificate pinning:} Limits risk by restricting which certificates are considered valid for a particular website. Instead of allowing any CA in the trusted list to sign a certificate, the browser pins the CA of choice; any certificates received that are not from this pinned CA are considered invalid. Therefore, attackers are unable to man in the middle even if they have a valid certificate from a trusted authority as long as the pinned authority doesn't match.
 \subparagraph {Certificate Transparency:} All certificates are publicly disclosed, providing greater insight and transparency. Certificate transparency has two main components, logs and monitors.
- \begin{itemize}
-    \item Logs maintain records of all issued certificates to a domain. These logs are append only, and cannot be altered or deleted once a certificate has been added to the log (using something called a Merkle Tree to achieve this)
-    \item Monitors do just that, monitor the logs for anything they can be set to monitor. Some monitors can allow users to create and run queries for certificates, as google does. Some domains may be interested in receiving notifications for when a certificate is issued to their domain, or if it matches some query they are interested in monitoring.
-\end{itemize}
+
+\bigskip
+{\parindent0pt Logs maintain records of all issued certificates to a domain. 
+These logs are append only, and cannot be altered or deleted once a certificate
+has been added to the log (using something called a Merkle Tree to achieve
+this)}
+
+\bigskip
+{\parindent0pt Monitors do just that, monitor the logs for anything they can be
+set to monitor. Some monitors can allow users to create and run queries for 
+certificates, as google does. Some domains may be interested in receiving 
+notifications for when a certificate is issued to their domain, or if it matches
+some query they are interested in monitoring.}
 
 \subsection{TLS 1.2 with RSA Key Exchange}
 Another way to negotiate keys in TLS 1.2 is using RSA public key encryption to 
