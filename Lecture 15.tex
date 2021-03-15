@@ -433,8 +433,16 @@ for Hotmail, Gmail, Skype, Yahoo Mail, Firefox}
 {\parindent0pt 2016: WoSign issues cert for GitHub.}
 
 \paragraph{Mitigations}
-\subparagraph {Certificate pinning:} Limits risk by restricting which certificates are considered valid for a particular website. Instead of allowing any CA in the trusted list to sign a certificate, the browser pins the CA of choice; any certificates received that are not from this pinned CA are considered invalid. Therefore, attackers are unable to man in the middle even if they have a valid certificate from a trusted authority as long as the pinned authority doesn't match.
-\subparagraph {Certificate Transparency:} All certificates are publicly disclosed, providing greater insight and transparency. Certificate transparency has two main components, logs and monitors.
+\subparagraph {Certificate pinning:} Limits risk by restricting which 
+certificates are considered valid for a particular website. Instead of allowing
+any CA in the trusted list to sign a certificate, the browser pins the CA of 
+choice; any certificates received that are not from this pinned CA are 
+considered invalid. Therefore, attackers are unable to man in the middle even 
+if they have a valid certificate from a trusted authority as long as the pinned
+authority doesn't match.
+\subparagraph {Certificate Transparency:} All certificates are publicly 
+disclosed, providing greater insight and transparency. Certificate transparency 
+has two main components, logs and monitors.
 
 \bigskip
 {\parindent0pt Logs maintain records of all issued certificates to a domain. 
