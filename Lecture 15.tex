@@ -575,44 +575,67 @@ order to keep secure connections between clients and servers, while keeping
 with government standards.}
 
 \subsection{TLS Keytheft and Other Risks in the Wild}
-If an attacker was able to issue validated certificates for a domain they don’t 
-own, then they wouldn’t need to get a hold of any existing private keys. They 
-would just make their own key pair and issue a certificates for it. The 
-attacker DoS’s the victim’s server and stands their own server up using the 
-attacker’s certificate and key.
+{\parindent0pt If an attacker was able to issue validated certificates for a 
+domain they don’t own, then they wouldn’t need to get a hold of any existing 
+private keys. They would just make their own key pair and issue a certificates 
+for it. The attacker DoS’s the victim’s server and stands their own server up 
+using the attacker’s certificate and key.}
 
 \bigskip
-However, if an attacker gets the private key for a victim’s server then the 
-attacker does not need to create a new certificate. The attacker will just grab
-the existing cert (it’s already being handed out by the victim’s server) and 
-DoS the victim’s server and stand up their own server using the victim’s cert 
-and key.
+{\parindent0pt However, if an attacker gets the private key for a victim’s 
+server then the attacker does not need to create a new certificate. The attacker
+will just grab the existing cert (it’s already being handed out by the victim’s
+server) and DoS the victim’s server and stand up their own server using the 
+victim’s cert and key.}
 
 \bigskip
-Often an ordinary user is vulnerable to one or more parties that they don't 
-really trust, between them and any particular peer out on the Internet, this 
-might be the proprietor of the coffee shop where they're using WiFi, or their 
-home ISP, the network engineers at their employer's place of business, or even 
-the sovereign government of the country they're in.
+{\parindent0pt Often an ordinary user is vulnerable to one or more parties that 
+they don't really trust, between them and any particular peer out on the 
+Internet, this might be the proprietor of the coffee shop where they're using 
+WiFi, or their home ISP, the network engineers at their employer's place of 
+business, or even the sovereign government of the country they're in.}
 
 \subsection{Lavabit}
-Even if TLS and key exchange works perfectly, there is still the matter of old-fashioned extortion by powerful governments. For example, consider the events of 2013 after Edward Snowden blew the whistle on the NSA's domestic spying capabilities.
-Snowden was using a secure mail service Lavabit. In order for the US government to spy on his communications after his defection. Lavabit was commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys to present to the court. However, Ladar Levison chose to bring a blurry, illegible photo which he claimed to be the TLS key.
+{\parindent0pt Even if TLS and key exchange works perfectly, there is still the
+matter of old-fashioned extortion by powerful governments. For example, consider
+the events of 2013 after Edward Snowden blew the whistle on the NSA's domestic 
+spying capabilities.}
+
+\bigskip
+{\parindent0pt Snowden was using a secure mail service Lavabit. In order for 
+the US government to spy on his communications after his defection. Lavabit was
+commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys
+to present to the court. However, Ladar Levison chose to bring a blurry, 
+illegible photo which he claimed to be the TLS key.}
+
 \begin{center}
 \includegraphics[scale=.3]{./lavabit-summons.png}
 \\Lavabit summons
 \end{center}
 
-Lavabit never gave up the key, and instead chose to end their business operations rather than violate the privacy of their customers around the globe. Politicians and the US government do not care about the individual's right to privacy. For example, here is a quote from former president Barack Obama:
+{\parindent0pt Lavabit never gave up the key, and instead chose to end their 
+business operations rather than violate the privacy of their customers around 
+the globe.  Politicians and the US government do not care about the individual's
+right to privacy. For example, here is a quote from former president Barack 
+Obama:}
 
 \begin{center}
 \includegraphics[scale=.3]{./lavabit-blurry-key.png}
 \\The image of the key brought into court
 \end{center}
 
-"Because, if, in fact, you can’t crack that [encryption] at all, government can’t get in, then everybody is walking around with a Swiss bank account in their pocket – right? So there has to be some concession to the need to be able to get into that information somehow."
+{\parindent0pt "Because, if, in fact, you can’t crack that [encryption] at all,
+government can’t get in, then everybody is walking around with a Swiss bank 
+account in their pocket – right? So there has to be some concession to the need
+to be able to get into that information somehow."}
 
 
-It is with this spirit that the US government has actually weakened encryption to make their job of spying easier. For example, in the 1990s, TLS 1.0 included options to weaken the protocol for US export control (browsers outside of the US were to request the weakened option). Even though these options are no longer required due to political shifts, there are still servers that respect the request. This lead to a series of attacks such as FREAK, logjam, and DROWN. 
+{\parindent0pt It is with this spirit that the US government has actually 
+weakened encryption to make their job of spying easier. For example, in the 
+1990s, TLS 1.0 included options to weaken the protocol for US export control 
+(browsers outside of the US were to request the weakened option). Even though 
+these options are no longer required due to political shifts, there are still 
+servers that respect the request. This lead to a series of attacks such as 
+FREAK, logjam, and DROWN.}
 
 \end{document}
