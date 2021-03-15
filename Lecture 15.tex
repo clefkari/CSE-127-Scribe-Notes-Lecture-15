@@ -453,21 +453,32 @@ some query they are interested in monitoring.}
 Another way to negotiate keys in TLS 1.2 is using RSA public key encryption to 
 share a secret master key.
 
-\begin{enumerate}
-  \item This starts with the Alice[client] sending a hello.
-  \item Then, the server will send over its certificate, which contains its 
-  public key.
-  \item Alice[client] will choose a random value, called a premaster secret, 
-  which she encrypts to the server's RSA public key and sends back to the 
-  server.
-  \item The server is the only one who can decrypt the value of the encrypted 
-  premaster secret.
-  \item The server and client will then use a key derivation function to 
-  derive their encryption and MAC keys.
-  \item The server and client will exchange MACs of the dialogue.
-  \item Finally, they will send encrypted requests using the symmetric 
-  encryption key.
-\end{enumerate}
+\bigskip
+{\parindent0pt 1) This starts with the Alice[client] sending a hello.}
+
+\smallskip
+{\parindent0pt 2) Then, the server will send over its certificate, which 
+contains its public key.}
+
+\smallskip
+{\parindent0pt 3) Alice[client] will choose a random value, called a premaster 
+secret, which she encrypts to the server's RSA public key and sends back to the 
+server.}
+
+\smallskip
+{\parindent0pt 4) The server is the only one who can decrypt the value of the 
+encrypted premaster secret.}
+
+\smallskip
+{\parindent0pt 5) The server and client will then use a key derivation function 
+to derive their encryption and MAC keys.}
+
+\smallskip
+{\parindent0pt 6) The server and client will exchange MACs of the dialogue.}
+
+\smallskip
+{\parindent0pt 7) Finally, they will send encrypted requests using the symmetric 
+encryption key.}
 
 \includegraphics[scale=.6]{./TLS_RSA.png}
 
@@ -477,35 +488,63 @@ instead encrypts a secret and sends it to the server.
 \subsection{How TLS Achieves Its Security Goals}
 It allows transmitting information between a client and the server with an encrypted connection. Listening in, only allows the recipients who are exchanging information to be seen. Without the secret keys the information cannot be decrypt it.
 \subsection{What If a Private Key Gets Stolen or Compromised?}
-\begin{itemize}
-  \item The attacker is able to actively man-in-the-middle a connection. Therefore, they are able to impersonate the server to others. This allows the attacker to eavesdrop between the parties. With the a valid secret key they are able to decrypt messages that are being sent from the users compromised key.
-  \item With a compromised RSA key, the attacker can obtain the session keys and decrypt the sessions information. Any past traffic that is recorded can also be decrypted with such an attack.
-\end{itemize}
+{\parindent0pt The attacker is able to actively man-in-the-middle a connection.
+Therefore, they are able to impersonate the server to others. This allows the 
+attacker to eavesdrop between the parties. With the a valid secret key they are
+able to decrypt messages that are being sent from the users compromised key.}
+
+\bigskip
+{\parindent0pt With a compromised RSA key, the attacker can obtain the session
+keys and decrypt the sessions information. Any past traffic that is recorded 
+can also be decrypted with such an attack.}
+
 \subsection{TLS v. 1.2 and Below Vulnerabilities}
-\begin{itemize}
-  \item TLS 1.2 and below allowed attackers manipulate data between client and servers. Including credit card information, credentials, and other valuable information. 
-  \item TLS 1.2 addressed these concerns. They allowed clients and servers to choose specific hash and signature algorithms. Allowed authenticated ecryption for other data modes.
-  \end{itemize}
+{\parindent0pt TLS 1.2 and below allowed attackers manipulate data between 
+client and servers. Including credit card information, credentials, and other 
+valuable information.}
+
+\bigskip
+{\parindent0pt TLS 1.2 addressed these concerns. They allowed clients and 
+servers to choose specific hash and signature algorithms. Allowed authenticated
+ecryption for other data modes.}
 
 \subsection{TLS 1.3}
-\begin{itemize}
-  \item Removes the support of SHA-224 and MD5 because of the compromised vulnerabilities. 
-  \item Removes RSA key exchange, which allowed protection for passive decryption
-  \item Allowing handshake encryption immediately after key exchange. This limits the amount of data that an eavesdropper can see. Also a noticeable slower time to secure a connection.
-\end{itemize}
+{\parindent0pt Removes the support of SHA-224 and MD5 because of the compromised
+vulnerabilities.}
+
+\bigskip
+{\parindent0pt Removes RSA key exchange, which allowed protection for passive 
+decryption}
+
+\bigskip
+{\parindent0pt Allowing handshake encryption immediately after key exchange. 
+This limits the amount of data that an eavesdropper can see. Also a noticeable 
+slower time to secure a connection.}
 
 \subsection{TLS Key Theft and Other Risks in the Wild}
-\begin{itemize}
-  \item A very common attack is SSL tripping. The attacker gets in between the user and an encrypted host. They act as a middle host between the client and secured website. Any information the user enters will first go through the attacker
-  \item Using expired TLS certificates can cause a man-in-middle attack. Therefore, any expired certificates should be removed from servers.
- \item Not identifying any forges or untrusted certificates
-\end{itemize}
+{\parindent0pt A very common attack is SSL tripping. The attacker gets in 
+between the user and an encrypted host. They act as a middle host between the 
+client and secured website. Any information the user enters will first go 
+through the attacker}
+
+\bigskip
+{\parindent0pt Using expired TLS certificates can cause a man-in-middle attack.
+Therefore, any expired certificates should be removed from servers.}
+
+\bigskip
+{\parindent0pt Not identifying any forges or untrusted certificates}
 
 \subsection{The “Crypto Wars” and the Historical Development of TLS}
-\begin{itemize}
-  \item Unofficial term used to describe the feud between governments and their attempt to limit the access cryptography strong enough to go unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data Encryption Standard, but led many to believe there will always be a back door if a government wanted to eavesdrop on "encypted" data.
-  \item The development of TLS has been supported by governments in order to keep secure connections between clients and servers, while keeping with government standards.
-\end{itemize}
+{\parindent0pt Unofficial term used to describe the feud between governments 
+and their attempt to limit the access cryptography strong enough to go 
+unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data 
+Encryption Standard, but led many to believe there will always be a back door 
+if a government wanted to eavesdrop on "encypted" data.}
+
+\bigskip
+{\parindent0pt The development of TLS has been supported by governments in 
+order to keep secure connections between clients and servers, while keeping 
+with government standards.}
 
 \subsection{TLS Keytheft and Other Risks in the Wild}
 If an attacker was able to issue validated certificates for a domain they don’t own, then they wouldn’t need to get a hold of any existing private keys. They would just make their own key pair and issue a certificates for it. The attacker DoS’s the victim’s server and stands their own server up using the attacker’s certificate and key.
