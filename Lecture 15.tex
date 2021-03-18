@@ -49,6 +49,8 @@
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
 \usepackage{times}
+\usepackage{url}
+\usepackage{enumerate}
 
 %%% END Article customizations
 
@@ -98,7 +100,7 @@ confidentiality and integrity of payloads.}
 
 \section{Constructing a Secure Encrypted Channel}
 In order to construct a securely encrypted channel, several preliminary
-steps must be performed:
+steps (not by order) must be performed:
 
 \subsection{Encryption and MAC (Message Authentication Code)}
 
@@ -107,7 +109,7 @@ steps must be performed:
 \end{center}
 
 {\parindent0pt Alice (left) and Bob (right) want to communicate on a secure 
-channel that is protected against passive easedroppers and man-in-the-middle
+channel that is protected against passive eavesdroppers and man-in-the-middle
 attacks.}
 
 \bigskip
@@ -298,6 +300,7 @@ downgrade and decryption attacks.
 {\parindent0pt TLS 1.3 Standardized in August 2018 and is being rolled out now;
 major change from TLS 1.2 .}
 
+\bigskip
 TLS 1.1, 1.2,  and 1.3 are similar, but in general TLS 1.3 is a better protocol.
 Older versions of TLS have potential flaws.
 
@@ -415,7 +418,7 @@ trusted by the client.}
 
 \bigskip
 {\parindent0pt This allows the attacker to intercept the data being sent from the
-bank, and send the client his own "certified trusted" public key as if 
+bank, and send the client his own "certified and trusted" public key as if 
 he were the bank; the client will accept this, (since it has the valid 
 certificate) encrypt her data using this malicious key, and send the 
 data to the bank.}
@@ -513,7 +516,7 @@ instead encrypts a secret and sends it to the server.
 {\parindent0pt It allows transmitting information between a client and the 
 server with an encrypted connection. Listening in, only allows the recipients 
 who are exchanging information to be seen. Without the secret keys the 
-information cannot be decrypt it.}
+information cannot be decrypted.}
 
 \subsection{What If a Private Key Gets Stolen or Compromised?}
 {\parindent0pt The attacker is able to actively man-in-the-middle a connection.
@@ -526,53 +529,10 @@ able to decrypt messages that are being sent from the users compromised key.}
 keys and decrypt the sessions information. Any past traffic that is recorded 
 can also be decrypted with such an attack.}
 
-\subsection{TLS v. 1.2 and Below Vulnerabilities}
-{\parindent0pt TLS 1.2 and below allowed attackers manipulate data between 
-client and servers. Including credit card information, credentials, and other 
-valuable information.}
-
-\bigskip
-{\parindent0pt TLS 1.2 addressed these concerns. They allowed clients and 
-servers to choose specific hash and signature algorithms. Allowed authenticated
-ecryption for other data modes.}
-
-\subsection{TLS 1.3}
-{\parindent0pt Removes the support of SHA-224 and MD5 because of the compromised
-vulnerabilities.}
-
-\bigskip
-{\parindent0pt Removes RSA key exchange, which allowed protection for passive 
-decryption}
-
 \bigskip
 {\parindent0pt Allowing handshake encryption immediately after key exchange. 
 This limits the amount of data that an eavesdropper can see. Also a noticeable 
 slower time to secure a connection.}
-
-\subsection{TLS Key Theft and Other Risks in the Wild}
-{\parindent0pt A very common attack is SSL tripping. The attacker gets in 
-between the user and an encrypted host. They act as a middle host between the 
-client and secured website. Any information the user enters will first go 
-through the attacker}
-
-\bigskip
-{\parindent0pt Using expired TLS certificates can cause a man-in-middle attack.
-Therefore, any expired certificates should be removed from servers.}
-
-\bigskip
-{\parindent0pt Not identifying any forges or untrusted certificates}
-
-\subsection{The “Crypto Wars” and the Historical Development of TLS}
-{\parindent0pt Unofficial term used to describe the feud between governments 
-and their attempt to limit the access cryptography strong enough to go 
-unrecognized by intelligence agencies. In 1975 the U.S. introduced the Data 
-Encryption Standard, but led many to believe there will always be a back door 
-if a government wanted to eavesdrop on "encypted" data.}
-
-\bigskip
-{\parindent0pt The development of TLS has been supported by governments in 
-order to keep secure connections between clients and servers, while keeping 
-with government standards.}
 
 \subsection{TLS Keytheft and Other Risks in the Wild}
 {\parindent0pt If an attacker was able to issue validated certificates for a 
@@ -585,8 +545,7 @@ using the attacker’s certificate and key.}
 {\parindent0pt However, if an attacker gets the private key for a victim’s 
 server then the attacker does not need to create a new certificate. The attacker
 will just grab the existing cert (it’s already being handed out by the victim’s
-server) and DoS the victim’s server and stand up their own server using the 
-victim’s cert and key.}
+server) and use it to decrypt or man in the middle connections or impersonate the server.}
 
 \bigskip
 {\parindent0pt Often an ordinary user is vulnerable to one or more parties that 
@@ -595,42 +554,8 @@ Internet, this might be the proprietor of the coffee shop where they're using
 WiFi, or their home ISP, the network engineers at their employer's place of 
 business, or even the sovereign government of the country they're in.}
 
-\subsection{Lavabit}
-{\parindent0pt Even if TLS and key exchange works perfectly, there is still the
-matter of old-fashioned extortion by powerful governments. For example, consider
-the events of 2013 after Edward Snowden blew the whistle on the NSA's domestic 
-spying capabilities.}
-
-\bigskip
-{\parindent0pt Snowden was using a secure mail service Lavabit. In order for 
-the US government to spy on his communications after his defection. Lavabit was
-commanded to appear in court, and to bring all of their TLS, HTTPS, and SSL keys
-to present to the court. However, Ladar Levison chose to bring a blurry, 
-illegible photo which he claimed to be the TLS key.}
-
-\begin{center}
-\includegraphics[scale=.3]{./lavabit-summons.png}
-\\Lavabit summons
-\end{center}
-
-{\parindent0pt Lavabit never gave up the key, and instead chose to end their 
-business operations rather than violate the privacy of their customers around 
-the globe.  Politicians and the US government do not care about the individual's
-right to privacy. For example, here is a quote from former president Barack 
-Obama:}
-
-\begin{center}
-\includegraphics[scale=.3]{./lavabit-blurry-key.png}
-\\The image of the key brought into court
-\end{center}
-
-{\parindent0pt "Because, if, in fact, you can’t crack that [encryption] at all,
-government can’t get in, then everybody is walking around with a Swiss bank 
-account in their pocket – right? So there has to be some concession to the need
-to be able to get into that information somehow."}
-
-
-{\parindent0pt It is with this spirit that the US government has actually 
+\subsection{U.S. Government}
+{\parindent0pt The US government has actually 
 weakened encryption to make their job of spying easier. For example, in the 
 1990s, TLS 1.0 included options to weaken the protocol for US export control 
 (browsers outside of the US were to request the weakened option). Even though 
@@ -638,4 +563,16 @@ these options are no longer required due to political shifts, there are still
 servers that respect the request. This lead to a series of attacks such as 
 FREAK, logjam, and DROWN.}
 
+\newpage
+\subsection{Works Cited}
+
+\begin{enumerate}
+\item \url{http://cseweb.ucsd.edu/classes/wi21/cse127-a/slides/15-tls.pdf}
+\item \url{https://us.norton.com/internetsecurity-wifi-what-is-a-man-in-the-middle-attack.html}
+\item \url{https://www.tutorialspoint.com/cryptography/message_authentication.htm}
+\item \url{https://tls.ulfheim.net/}
+\item \url{https://tls13.ulfheim.net/}
+\item \url{https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange}
+\item \url{https://en.wikipedia.org/wiki/Transport_Layer_Security}
+\end{enumerate}
 \end{document}
